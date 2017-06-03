@@ -47,4 +47,14 @@ class userController
 
         return $allUsers;      
     }
+    
+    function inviteNewUser($param)
+    {
+
+        $user = new User();
+
+        $inviteNewUser = $user->inviteNewUser($param);
+
+        return $inviteNewUser;      
+    }
 }

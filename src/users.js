@@ -1,3 +1,6 @@
+var Confirm = require('./confirm.js');
+
+
 var Users = React.createClass({
     
     getInitialState: function(){
@@ -6,6 +9,8 @@ var Users = React.createClass({
             pendingUsers: [],
             searchUsers: [],
             ajaxUrl: './backend/index.php',
+            errorMessage: '',
+            showConfirm: false,
         })
     },
 
@@ -15,7 +20,7 @@ var Users = React.createClass({
 
     shouldComponentUpdate: function(nextProps, nextState){
         //console.log(nextProps, nextState);
-        if(nextState != this.state){
+        if(nextState != this.state || nextProps != this.props){
             return true
         }else{
             return false
@@ -35,31 +40,34 @@ var Users = React.createClass({
         }
 
         $.post({url: ajaxUrl, data: param, dataType: 'json'}).done(function(data){
-            var users = element.state.users.concat([data['users']]);
-            
-            var pending_users = element.state.pendingUsers.concat([data['pending_users']]);
-            element.setState({users: users, pendingUsers: pending_users})
-            //console.log(element);
+
+            element.setState({users: data['users'], pendingUsers: data['pending_users']})
 
         })
-
-
-
-        //console.log(element);
         
     },
 
     inviteNewUser: function(gmail){
+        var element = this;
         
         var param = {
             'c'     : 'user',
             'a'     : 'inviteNewUser',
             'param' : {
-                'gamil' : gmail
+                'gmail' : gmail
             }
         }
 
         $.post({url: this.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
+            //console.log(data);
+            
+            if(data){
+                document.getElementById('addUserInput').value = '';
+                element.setState({errorMessage: 'User invited!'})
+                element.loadUsers();
+            }else{
+                element.setState({errorMessage: 'User already excists or invited!'})
+            }
             
         })
 
@@ -69,7 +77,13 @@ var Users = React.createClass({
     handleUserClick: function(e){
         e.preventDefault();
 
-        console.log(e);
+        //console.log(e);
+    },
+
+    handlePendingUserClick: function(e){
+        e.preventDefault();
+
+        //console.log(e);
     },
 
     handleAddUserClick: function(e){
@@ -84,29 +98,48 @@ var Users = React.createClass({
             var regex = /@gmail\.com$/
             if(regex.test(value)){
                 //Valid gmail adres
-
                 this.inviteNewUser(value);
-                //console.log(true);
             }else{
                 //Geen gmail adres
+                this.setState({errorMessage: 'Email is not a valid gmail account!'})
                 return false;
             }
         }else{
             //Geen waarde ingevuld
+            this.setState({errorMessage: 'Typ in a gmail account!'})
             return false;
         }
 
     },
 
+    removeUser: function(e){
+        e.preventDefault();
+
+        //console.log(e);
+
+        this.setState({showConfirm: true});
+
+    },
+
     render: function(){
         var element = this;
+
+        {element.state.showConfirm ?
+           <Confirm /> :
+           null
+        }
+
+        //console.log(element.state.showConfirm);
     
         //activeUsers(){
                 const activeUsers = this.state.users.map((user, i) => {
                     if(user){
                         return(
                                 <div>
-                                    <button className="list-group-item" onClick={element.handleClick} >{user.naam}<span className="badge">x</span></button>
+                                    <div className="panel-body">
+                                        <a href="#" onClick={element.handleUserClick} >{user.naam}</a>
+                                       <span onClick={element.removeUser} className="badge pull-right">x</span> 
+                                    </div>
                                 </div>
                             )
                     }
@@ -115,19 +148,23 @@ var Users = React.createClass({
                     if(pUser){
                         return(
                                 <div>
-                                    <a href="#" className="list-group-item" onClick={element.handleUserClick} >{pUser.rol}<span className="badge">x</span></a>
+                                    <div className="panel-body">
+                                        <a href="#" onClick={element.handlePendingUserClick} >{pUser.gmail}</a>
+                                        <span onClick={element.removeUser} className="badge pull-right">x</span>
+                                    </div>
                                 </div>
                             )
                     }
                 })
         //};
-        return (<div>
-            <div className="row">
-                <div className="col-md-4">
-                    <h2>Add user</h2>
+        return (
+            <div>
+                <div className="row">
+                    <div className="col-md-4">
+                        <h2>Add user</h2>
                         <form>
                           <div className="input-group">
-                            <input type="text" className="form-control" placeholder="Add user" />
+                            <input id="addUserInput" type="text" className="form-control" placeholder="Add user" />
                             <div className="input-group-btn">
                               <button className="btn btn-default" onClick={element.handleAddUserClick} >
                                 Add
@@ -135,19 +172,21 @@ var Users = React.createClass({
                             </div>
                           </div>
                         </form>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-6">
-                        <h2>Active users</h2>
-                        <div className="list-group">{activeUsers}</div>
                     </div>
-                    <div className="col-md-6">
-                        <h2>Pending users</h2>
-                        <div className="list-group">{pendingUsers}</div>
+                    <div className="col-md-8">{element.state.errorMessage}</div>
+                </div>
+                <div className="row">
+                    <div className="col-md-4">
+                            <h2>Users</h2>
+                            <div className="panel panel-default">{activeUsers}</div>
+                        </div>
+                        <div className="col-md-4 col-md-offset-2">
+                            <h2>Pending users</h2>
+                            <div className="panel panel-default">{pendingUsers}</div>
+                    </div>
                 </div>
             </div>
-            </div>)
+        )
     }
 });
 

@@ -8,14 +8,25 @@ var Auth = React.createClass({
 		return({
 			userId: this.props.id,
 			userName: this.props.name,
-			active: ''
+			userMail: this.props.mail,
+			role: 0,
 		})
 	},
+    
+    shouldComponentUpdate: function(nextProps, nextState){
+        if(nextState != this.state){
+            return true
+        }else{
+            return false
+        }
+
+    },
 
 	componentWillReceiveProps: function(nextProps){
 		this.setState({
 			userId: nextProps.id,
 			userName: nextProps.name,
+			userMail: nextProps.mail
 		})
 	},
 
@@ -32,25 +43,22 @@ var Auth = React.createClass({
 			'a'		: 'activeUser',
 			'param'	: {
 				'id'	: this.props.id,
+				'mail'	: this.props.mail,
 			}
 		}
 
-		//console.log(element);
 
-		$.post({url: ajaxUrl, data: param, dataType: 'json'}).done(function(data){
-
-		//console.log(data);	
-			
+		$.post({url: ajaxUrl, data: param, dataType: 'json'}).done(function(data){			
 
 			if(data['active']){
 				//Bestaande gebruiker
-				element.setState({'active': true});
-				element.setSession(data['active']['rol']);
+				element.setSession(data['active'][0]['rol']);
+				//element.setState({'active': true});
 			}else if(data['new']){
 				//Nieuwe gebruiker op aanvraag van beheerder
-				element.setState({'active': true});
 				element.setNewUser();
-				element.setSession(data['new']['rol']);
+				element.setSession(data['new'][0]['rol']);
+				//element.setState({'active': true});
 			}else{
 				//Nieuwe gebruiker die niet word toegelaten op de app
 				//element.setState({'active': false});
@@ -71,33 +79,38 @@ var Auth = React.createClass({
 			'param'	: {
 				'id'	: this.props.id,
 				'name'	: this.props.name,
+				'gmail' : this.props.mail,
 			}
 		}
 
-		$.post({url: ajaxUrl, data: param, dataType: 'json'}).done(function(data){
+		//console.log(param);
 
+		$.post({url: ajaxUrl, data: param, dataType: 'json'}).done(function(data){
+			console.log(data);
 		});
 
 		
 	},
 
-	setSession: function(role){
-
-		//console.log(role);
+	setSession: function(role){		
 
 		localStorage.setItem('userRole', role);
-		localStorage.setItem('userId', this.state.userId);
+		
+		//localStorage.setItem('userId', this.state.userId);
 
 	},
 
 	render: function(){
+			//console.log('render')
 
 		//const loggedIn = this.state.active;
 		//const loggedIn = localStorage.getItem('userId');
 
 			return (
 				<div>
-						<Navbar />
+						  
+					<Navbar />
+						
 		
 				</div>	
 				)

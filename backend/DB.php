@@ -16,13 +16,17 @@ class db {
         if($condition){$query .= " WHERE ".$condition;}
         if($condition2){$query .= " AND ".$condition2;}
         $query .= ";";
+
+        //var_dump($query);die();
         
         return $this->_db->query($query);
 
     }
 
     public function delete($table, $condition){
-        $query = "DELETE FROM " .$table." WHERE " .$condition['key'].$condition['constructor'].$condition['value']. ";";
+        $query = "DELETE FROM " .$table." WHERE " .$condition['key'].$condition['constructor']."'".$condition['value']. "';";
+
+        //var_dump($query);die;
 
         return $this->_db->query($query);
     }
@@ -38,7 +42,7 @@ class db {
             $this->_db->query($query);
         }
 
-        return 'oke';
+        return true;
 
     }
 
@@ -52,9 +56,27 @@ class db {
 
         $finalUpdate = implode(',', $update);
 
-        $query = "UPDATE " .$table. " SET " .$finalUpdate. " WHERE " .$condition['key'].$condition['constructor'].$condition['value']. ";";
+        $query = "UPDATE " .$table. " SET " .$finalUpdate. " WHERE " .$condition['key'].$condition['constructor']."'".$condition['value']. "';";
 
 
         return $this->_db->query($query);
+    }
+
+    public function get_row_array($result='', $type=MYSQLI_ASSOC) 
+    {
+        $result_array = array();
+
+        while ($row = mysqli_fetch_array($result, $type)) {
+            $result_array[] =$row;
+        }
+
+
+        /*foreach ($row as $key => $value) {
+            $row[$key] = $value;
+        }*/
+
+        //var_dump($result_array);die();
+
+        return $result_array;
     }
 }

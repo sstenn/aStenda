@@ -1,7 +1,7 @@
 var Home = require('./home.js');
 var Agenda = require('./agenda.js');
 var Users = require('./users.js');
-var Schedule = require('./schedule.js');
+var Template = require('./template.js');
 var Logout = require('./logout.js');
 
 var { Router,
@@ -15,7 +15,7 @@ var { Router,
 
     getInitialState: function(){
       return({
-
+          render: ''
       })
     },
 
@@ -31,7 +31,7 @@ var { Router,
             <IndexRoute component={Agenda}/> // Default page
             <Route path="users" component={Users} />
             <Route path="agenda" component={Agenda} />
-            <Route path="schedule" component={Schedule} />
+            <Route path="template" component={Template} />
             <Route path="logout" component={Logout} />
           </Route>
         </Router>

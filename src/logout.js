@@ -10,7 +10,8 @@ var Logout = React.createClass({
 
 	componentWillMount: function(){
 		localStorage.removeItem('userId');
-		localStorage.removeItem('userRole');
+		//localStorage.removeItem('userRole');
+
 	},
 
 	render: function(){

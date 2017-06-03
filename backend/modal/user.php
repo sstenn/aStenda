@@ -10,7 +10,7 @@ class User {
 		$this->_db = new db();
 	}
 
-	public function setUser($param)
+	public function setUser($param, $table='users')
 	{
 		
 		//var_dump($param);die();
@@ -18,31 +18,44 @@ class User {
 		$insertArray = array([
 				'google_id' => $param['id'],
 				'naam'		=> $param['name'],
+				'gmail'		=> $param['gmail'],
 				'rol'		=> $param['role']
 			]);
 
-		return $this->_db->insert('users', $insertArray);
+		return $this->_db->insert($table, $insertArray);
 	}
 
 	public function setNewUser($param)
 	{
 		$params = array();
 
-		$condition1 = 'google_id = "' . $param['id'] . '"';
+		$condition1 = 'gmail = "' . $param['gmail'] . '"';
 		//$condition2 = 'startdate > "' . (date('Y-m-d') - )
 
 		$user = $this->_db->select('*', 'pending_users', $condition1);
 
-		//var_dump($user->fetch_assoc());die();
+		//var_dump($user);die();
 
-		if($user->num_rows <= 0){
-			$row = $user->fetch_assoc();
+		if($user->num_rows > 0){
+			$row = $this->_db->get_row_array($user);
+			//$row = $user->fetch_assoc();
 
-			$params['id'] 	= $row['google_id'];
+			//var_dump($row);die;
+
+			$params['id'] 	= $param['id'];
 			$params['name'] = $param['name'];
-			$params['rol'] 	= $row['rol'];
+			$params['gmail'] = $param['gmail'];
+			$params['role'] 	= $row[0]['rol'];
 
-			return $this->setUser($params);
+			$inserted = $this->setUser($params);
+
+			if($inserted){
+				$this->removeUserFromPending($param['gmail']);
+
+				return true;
+			}else{
+				return false;
+			}
 		}else{
 			return false;
 		}
@@ -55,16 +68,20 @@ class User {
 
 		$user = $this->_db->select('*', 'users', $condition);
 
-		if($user->num_rows <= 0){
-			$user = $this->_db->select('*', 'pending_users', $condition);
 
-			if($user->num_rows <= 0){
+		if($user->num_rows <= 0){
+
+			$condition2 = 'gmail = "' . $param['mail'] . '"';
+
+			$pending_user = $this->_db->select('*', 'pending_users', $condition2);
+
+			if($pending_user->num_rows <= 0){
 				$return['new'] = false;
 			}else{
-				$return['new'] = $user->fetch_assoc();
+				$return['new'] = $this->_db->get_row_array($pending_user);
 			}
 		}else{
-			$return['active'] = $user->fetch_assoc();
+			$return['active'] = $this->_db->get_row_array($user);
 		}
 
 		return $return;
@@ -73,12 +90,56 @@ class User {
 	public function allUsers($param)
 	{
 		$users 			= $this->_db->select('*', 'users');
-		$pendingUsers 	= $this->_db->select('*', 'pending_users');		
+		$pendingUsers 	= $this->_db->select('*', 'pending_users');
 		
-		$return['users'] 			= $users->fetch_assoc();
-		$return['pending_users']	= $pendingUsers->fetch_assoc();
+		$return['users'] 			= $this->_db->get_row_array($users);
+		$return['pending_users']	= $this->_db->get_row_array($pendingUsers);
+
+		//var_dump($return);die();
 
 		return $return;
+	}
+
+	public function inviteNewUser($param, $role=0)
+	{
+		$condition = 'gmail = "' . $param['gmail'] . '"';
+
+		$user 			= $this->_db->select('*', 'users', $condition);
+		$pending_users 	= $this->_db->select('*', 'pending_users', $condition);
+
+		if($user->num_rows <= 0 && $pending_users->num_rows <= 0){
+			$this->sendInviteMail($param['gmail']);
+
+			$insertArray = array([
+					'rol' 			=> $role,
+					'gmail' 		=> $param['gmail'],
+					'start_date' 	=> date('Y-m-d H:i:s')
+				]);
+			return $this->_db->insert('pending_users', $insertArray);
+		}else{
+			return false;
+		}
+
+		
+
+	}
+
+	public function sendInviteMail($gmail)
+	{
+
+
+	}
+
+	public function removeUserFromPending($gmail)
+	{
+		$condition = array(
+				'key' 			=> 'gmail',
+				'constructor' 	=> '=',
+				'value' 		=> $gmail
+			);
+
+		return $this->_db->delete('pending_users', $condition);
+
 	}
 
 }

@@ -4,19 +4,23 @@ var Home = React.createClass({
 
     getInitialState: function(){
         return({
+            role : 0,
 
         })
     },
 
     componentWillMount: function(){
+        this.setState({role: localStorage.getItem('userRole')})
     },
 
     render: function(){
         //console.log(sessionStorage.getItem('userRole'))
 
-        const role = localStorage.getItem('userRole');
+        const role = this.state.role;
 
-        const intRole = parseInt(role);
+        //console.log(role);
+
+        //const intRole = parseInt(role);
 
         return (
             <div>
@@ -34,11 +38,18 @@ var Home = React.createClass({
                                 </div>
                                 <div className="navbar-collapse collapse sidebar-navbar-collapse">
                                     <ul className="nav navbar-nav">
-                                        { intRole > 80 &&
+                                        { role > 80 &&
                                                 <li><ReactRouter.Link to="/users">Users</ReactRouter.Link></li>
                                         }
                                         <li><ReactRouter.Link to="/agenda">Agenda</ReactRouter.Link></li>
-                                        <li><ReactRouter.Link to="/schedule">Rooster</ReactRouter.Link></li>
+                                        <li className="dropdown">
+                                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">Schedule<span className="caret"></span></a>
+                                            <ul className="dropdown-menu">
+                                                { role >80 &&
+                                                    <li><ReactRouter.Link to="/template">Template</ReactRouter.Link></li>
+                                                }
+                                            </ul>
+                                        </li>
                                         <li><ReactRouter.Link to="/logout">Logout</ReactRouter.Link></li>
                                     </ul>
                                 </div>

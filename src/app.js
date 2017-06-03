@@ -6,8 +6,10 @@ const userId = sessionStorage.getItem('userId');
 const loginSuccess = (response) => {
   var userId   = response['profileObj']['googleId']
   var userName = response['profileObj']['name']
+  var userMail = response['profileObj']['email']
 
-  ReactDOM.render(<Auth id={userId} name={userName} />, document.getElementById('app'))
+
+  ReactDOM.render(<Auth id={userId} name={userName} mail={userMail} />, document.getElementById('app'))
 }
 
 const loginFailure = (response) => {
