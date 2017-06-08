@@ -7,7 +7,7 @@
 
     $param      = isset($_POST['param']) ? $_POST['param'] : array();
 
-    //var_dump($_POST['param']['id']);die();
+    //var_dump($_POST);
 
     $controllerName = 'controller/' . $controller . 'Controller' . '.php';
     

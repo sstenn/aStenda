@@ -57,3 +57,26 @@ body{
 .borderAll{
   border: 1px solid #eee;
 }
+.templateTableBody{
+  padding: 0;
+  width: 14.2857%;
+  display: inline-block;
+  float: left;
+  position: relative;
+}
+@media (max-width: 992px){
+  .templateTableBody{
+    width: 100%;
+  }
+}
+
+.templateEmployment{
+  min-height: 30px;
+  padding-top: 5px;
+  padding-right: 5px;
+}
+
+.templateColorOption:hover{
+  cursor: pointer;
+  background-color: inherit !important;
+}

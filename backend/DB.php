@@ -11,10 +11,15 @@ class db {
         };
     }
 
-    public function select($value, $table, $condition=false, $condition2=false){
+    public function query($query){
+        return $this->_db->query($query);
+    }
+
+    public function select($value, $table, $condition=false, $condition2=false, $sort=false){
         $query = "SELECT " .$value." FROM " .$table ;
         if($condition){$query .= " WHERE ".$condition;}
         if($condition2){$query .= " AND ".$condition2;}
+        if($sort){$query .= " ORDER BY " .$sort;}
         $query .= ";";
 
         //var_dump($query);die();
@@ -23,10 +28,12 @@ class db {
 
     }
 
-    public function delete($table, $condition){
-        $query = "DELETE FROM " .$table." WHERE " .$condition['key'].$condition['constructor']."'".$condition['value']. "';";
+    public function delete($table, $condition, $condition2=false, $condition3=false){
+        $query  = "DELETE FROM " .$table." WHERE " .$condition['key'].$condition['constructor']."'".$condition['value']. "'";
+        if($condition2){$query .= " AND " .$condition2['key'].$condition2['constructor']."'".$condition2['value']. "'";}
+        if($condition3){$query .= " AND " .$condition3['key'].$condition3['constructor']."'".$condition3['value']. "'";}
+        $query .= ";";
 
-        //var_dump($query);die;
 
         return $this->_db->query($query);
     }

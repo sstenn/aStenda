@@ -1,4 +1,3 @@
-
 var Confirm = React.createClass({
 
     getInitialState: function(){
