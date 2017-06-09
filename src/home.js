@@ -48,6 +48,7 @@ var Home = React.createClass({
                                                 { role >80 &&
                                                     <li><ReactRouter.Link to="/template">Template</ReactRouter.Link></li>
                                                 }
+                                                <li><ReactRouter.Link to="/skipaday">Skip a day</ReactRouter.Link></li>
                                             </ul>
                                         </li>
                                         <li><ReactRouter.Link to="/logout">Logout</ReactRouter.Link></li>

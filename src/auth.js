@@ -53,12 +53,12 @@ var Auth = React.createClass({
 			if(data['active']){
 				//Bestaande gebruiker
 				element.setSession(data['active'][0]['rol']);
-				//element.setState({'active': true});
+				element.setState({'role': data['active'][0]['rol']});
 			}else if(data['new']){
 				//Nieuwe gebruiker op aanvraag van beheerder
 				element.setNewUser();
 				element.setSession(data['new'][0]['rol']);
-				//element.setState({'active': true});
+				element.setState({'role': data['active'][0]['rol']});
 			}else{
 				//Nieuwe gebruiker die niet word toegelaten op de app
 				//element.setState({'active': false});
@@ -101,7 +101,7 @@ var Auth = React.createClass({
 	},
 
 	render: function(){
-			//console.log('render')
+			
 
 		//const loggedIn = this.state.active;
 		//const loggedIn = localStorage.getItem('userId');
@@ -109,7 +109,7 @@ var Auth = React.createClass({
 			return (
 				<div>
 						  
-					<Navbar />
+					<Navbar role={this.state.role} />
 						
 		
 				</div>	

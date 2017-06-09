@@ -15,11 +15,12 @@ class db {
         return $this->_db->query($query);
     }
 
-    public function select($value, $table, $condition=false, $condition2=false, $sort=false){
+    public function select($value, $table, $condition=false, $condition2=false, $sort=false, $limit=false){
         $query = "SELECT " .$value." FROM " .$table ;
         if($condition){$query .= " WHERE ".$condition;}
         if($condition2){$query .= " AND ".$condition2;}
         if($sort){$query .= " ORDER BY " .$sort;}
+        if($limit){$query .= " LIMIT " .$limit;}
         $query .= ";";
 
         //var_dump($query);die();
@@ -64,7 +65,6 @@ class db {
         $finalUpdate = implode(',', $update);
 
         $query = "UPDATE " .$table. " SET " .$finalUpdate. " WHERE " .$condition['key'].$condition['constructor']."'".$condition['value']. "';";
-
 
         return $this->_db->query($query);
     }

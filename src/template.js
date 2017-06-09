@@ -83,7 +83,7 @@ var Template = React.createClass({
                 'time': time
             }
         } 
-        console.log(param)
+        //console.log(param)
 
         $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
             element.loadTemplate();
@@ -118,7 +118,7 @@ var Template = React.createClass({
 
         var template = element.state.template;
 
-        console.log(element.state.types)
+        //console.log(element.state.types)
 
         const selectDay = element.state.weekDays.map((day, i) => {
             if(day){
@@ -145,7 +145,7 @@ var Template = React.createClass({
                                 return(
                                     <div className="templateEmployment borderAll" style={{background: time[1]}}>
                                         {time[0]}
-                                        <span className="badge pull-right" data-day={day} data-time={time[0]} onClick={element.removeEmployment}>x</span>
+                                        <i className="fa fa-times delete pull-right" data-day={day} data-time={time[0]} onClick={element.removeEmployment} aria-hidden="true"></i>
                                     </div>
                                 )   
                             })
@@ -165,7 +165,7 @@ var Template = React.createClass({
 
         return (
             <div>
-                <div className="row">
+                
                     <h2>Template</h2>
                     <div className="text-center">
                         <div className="row">
@@ -185,7 +185,7 @@ var Template = React.createClass({
                             </div>    
                         </div>
                     </div>
-                </div>
+                
             </div>
         )
     }

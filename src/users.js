@@ -138,7 +138,7 @@ var Users = React.createClass({
                                 <div>
                                     <div className="panel-body">
                                         <a href="#" onClick={element.handleUserClick} >{user.naam}</a>
-                                       <span onClick={element.removeUser} className="badge pull-right">x</span> 
+                                        <i className="fa fa-times pull-right delete" aria-hidden="true" onClick={element.removeUser}></i> 
                                     </div>
                                 </div>
                             )
@@ -150,7 +150,7 @@ var Users = React.createClass({
                                 <div>
                                     <div className="panel-body">
                                         <a href="#" onClick={element.handlePendingUserClick} >{pUser.gmail}</a>
-                                        <span onClick={element.removeUser} className="badge pull-right">x</span>
+                                        <i className="fa fa-times pull-right delete" aria-hidden="true" onClick={element.removeUser}></i>
                                     </div>
                                 </div>
                             )
@@ -159,9 +159,10 @@ var Users = React.createClass({
         //};
         return (
             <div>
+                <h2>Users</h2>
                 <div className="row">
                     <div className="col-md-4">
-                        <h2>Add user</h2>
+                        <h3>Add user</h3>
                         <form>
                           <div className="input-group">
                             <input id="addUserInput" type="text" className="form-control" placeholder="Add user" />
@@ -177,11 +178,11 @@ var Users = React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-md-4">
-                            <h2>Users</h2>
+                            <h3>Active users</h3>
                             <div className="panel panel-default">{activeUsers}</div>
                         </div>
                         <div className="col-md-4 col-md-offset-2">
-                            <h2>Pending users</h2>
+                            <h3>Pending users</h3>
                             <div className="panel panel-default">{pendingUsers}</div>
                     </div>
                 </div>

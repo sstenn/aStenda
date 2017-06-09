@@ -2,6 +2,7 @@ var Home = require('./home.js');
 var Agenda = require('./agenda.js');
 var Users = require('./users.js');
 var Template = require('./template.js');
+var Skip = require('./skipaday.js');
 var Logout = require('./logout.js');
 
 var { Router,
@@ -15,7 +16,7 @@ var { Router,
 
     getInitialState: function(){
       return({
-          render: ''
+          role: 0
       })
     },
 
@@ -23,7 +24,15 @@ var { Router,
 
     },
 
+    componentWillReceiveProps: function(nextProps){
+      this.setState({
+        role: nextProps.role,
+      })
+    },
+
     render: function(){
+
+      //console.log(this.state.role)
 
       return (
         <Router history={hashHistory}>
@@ -32,6 +41,7 @@ var { Router,
             <Route path="users" component={Users} />
             <Route path="agenda" component={Agenda} />
             <Route path="template" component={Template} />
+            <Route path="skipaday" component={Skip} />
             <Route path="logout" component={Logout} />
           </Route>
         </Router>

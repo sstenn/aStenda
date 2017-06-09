@@ -80,3 +80,14 @@ body{
   cursor: pointer;
   background-color: inherit !important;
 }
+.delete:hover{
+  cursor: pointer;
+  color: red;
+}
+.approved{
+  color: green;
+}
+.approve:hover{
+  cursor: pointer;
+  color: green;
+}
