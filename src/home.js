@@ -25,7 +25,7 @@ var Home = React.createClass({
         return (
             <div>
                 <div className="menu col-md-2">
-                    <div class="sidebar-nav">
+                    <div className="sidebar-nav">
                         <div className="sidebar-nav">
                             <div className="navbar navbar-default" role="navigation">
                                 <div className="navbar-header">
@@ -36,24 +36,31 @@ var Home = React.createClass({
                                         <span className="icon-bar"></span>
                                     </button>
                                 </div>
+                                <div className="logo-wrapper">
+                                    <img className="logo" src="./data/logov2.png" />
+                                </div>
                                 <div className="navbar-collapse collapse sidebar-navbar-collapse">
                                     <ul className="nav navbar-nav">
                                         { role > 80 &&
-                                                <li><ReactRouter.Link to="/users">Users</ReactRouter.Link></li>
+                                                <li><ReactRouter.Link to="/users"><i className="fa fa-user-circle-o fa-fw" aria-hidden="true"></i> Users</ReactRouter.Link></li>
                                         }
-                                        <li><ReactRouter.Link to="/agenda">Agenda</ReactRouter.Link></li>
+                                        <li><ReactRouter.Link to="/agenda"><i className="fa fa-calendar fa-fw" aria-hidden="true"></i> Agenda</ReactRouter.Link></li>
                                         <li className="dropdown">
-                                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">Schedule<span className="caret"></span></a>
+                                            <a className="dropdown-toggle" data-toggle="dropdown" href="#"><i className="fa fa-tasks fa-fw" aria-hidden="true"></i> Schedule<span className="caret"></span></a>
                                             <ul className="dropdown-menu">
-                                                { role >80 &&
+                                                { role > 80 &&
+                                                    <li><ReactRouter.Link to="/scheduleMaker">Make schedule</ReactRouter.Link></li>
+                                                }
+                                                { role > 80 &&
                                                     <li><ReactRouter.Link to="/template">Template</ReactRouter.Link></li>
                                                 }
                                                 <li><ReactRouter.Link to="/skipaday">Skip a day</ReactRouter.Link></li>
                                             </ul>
                                         </li>
-                                        <li><ReactRouter.Link to="/logout">Logout</ReactRouter.Link></li>
+                                        <li><ReactRouter.Link to="/logout"><i className="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</ReactRouter.Link></li>
                                     </ul>
                                 </div>
+
                             </div>
                         </div>
                     </div>

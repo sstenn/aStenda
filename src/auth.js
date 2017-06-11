@@ -96,7 +96,7 @@ var Auth = React.createClass({
 
 		localStorage.setItem('userRole', role);
 		
-		//localStorage.setItem('userId', this.state.userId);
+		localStorage.setItem('userGoogleId', this.state.userId);
 
 	},
 

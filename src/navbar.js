@@ -2,6 +2,7 @@ var Home = require('./home.js');
 var Agenda = require('./agenda.js');
 var Users = require('./users.js');
 var Template = require('./template.js');
+var ScheduleMaker = require('./scheduleMaker.js');
 var Skip = require('./skipaday.js');
 var Logout = require('./logout.js');
 
@@ -40,6 +41,7 @@ var { Router,
             <IndexRoute component={Agenda}/> // Default page
             <Route path="users" component={Users} />
             <Route path="agenda" component={Agenda} />
+            <Route path="scheduleMaker" component={ScheduleMaker} />
             <Route path="template" component={Template} />
             <Route path="skipaday" component={Skip} />
             <Route path="logout" component={Logout} />

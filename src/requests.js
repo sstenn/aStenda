@@ -7,10 +7,22 @@ var Requests = React.createClass({
             ajaxUrl: './backend/index.php',
             pending: [],
             approved: [],
+            rerender: false,
+            user_id: 0,
+            role: 0,
         })
     },
 
+    componentWillReceiveProps: function(nextProps){
+        this.loadRequests();
+    },
+
     componentWillMount: function(){
+        this.setState({
+            user_id: localStorage.getItem('userGoogleId'),
+            role: localStorage.getItem('userRole')
+        })
+
         this.loadRequests();
     },
 
@@ -21,6 +33,8 @@ var Requests = React.createClass({
             'c'     : 'request',
             'a'     : 'allRequests',
             'param' : {
+                'role'    : element.state.role,
+                'user_id' : element.state.user_id
             }
         }
 
@@ -84,14 +98,27 @@ var Requests = React.createClass({
                     <div>
                         <div className="panel-body">
                             <div className="row">
-                                <div className="col-md-3">{request.naam}</div>
-                                <div className="col-md-4">{request.time_from}</div>
-                                <div className="col-md-4">{request.time_till}</div>
-                                <div className="col-md-1">
+                                <div className="col-sm-3">{request.naam}</div>
+                                <div className="col-sm-4">{request.time_from}</div>
+                                <div className="col-sm-4">{request.time_till}</div>
+                                <div className="col-sm-1">
+                                {   element.state.role > 80 &&
                                     <i className="fa fa-check approve" data-request={request.req_id} data-user={request.usr_id} aria-hidden="true" onClick={element.approveRequest}></i>
+                                }
                                     <i className="fa fa-times delete" data-request={request.req_id} data-user={request.usr_id} aria-hidden="true" onClick={element.declineRequest}></i>
                                 </div>
+                                <div className="col-sm-12">{request.reason}</div>
                             </div> 
+                        </div>
+                    </div>
+                )
+            }else{
+                return(
+                    <div>
+                        <div className="panel-body">
+                            <div className="row">
+                                <div className="col-sm-12">No requests!</div>
+                            </div>
                         </div>
                     </div>
                 )
@@ -104,13 +131,24 @@ var Requests = React.createClass({
                     <div>
                         <div className="panel-body">
                             <div className="row">
-                                <div className="col-md-3">{request.naam}</div>
-                                <div className="col-md-4">{request.time_from}</div>
-                                <div className="col-md-4">{request.time_till}</div>
-                                <div className="col-md-1">
+                                <div className="col-sm-3">{request.naam}</div>
+                                <div className="col-sm-4">{request.time_from}</div>
+                                <div className="col-sm-4">{request.time_till}</div>
+                                <div className="col-sm-1">
                                     <i className="fa fa-check approved" aria-hidden="true"></i>
                                 </div>
+                                <div className="col-sm-12">{request.reason}</div>
                             </div> 
+                        </div>
+                    </div>
+                )
+            }else{
+                return(
+                    <div>
+                        <div className="panel-body">
+                            <div className="row">
+                                <div className="col-sm-12">No requests!</div>
+                            </div>
                         </div>
                     </div>
                 )

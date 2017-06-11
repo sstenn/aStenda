@@ -38,4 +38,14 @@ class requestController
 
         return $declineRequest;      
     }
+    
+    function requestSkip($param)
+    {
+
+        $request = new Request();
+
+        $requestSkip = $request->requestSkip($param);
+
+        return $requestSkip;      
+    }
  }

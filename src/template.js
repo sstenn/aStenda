@@ -143,7 +143,7 @@ var Template = React.createClass({
                             var times = template[day].map((val, i) => {
                                 var time = val.split('|');
                                 return(
-                                    <div className="templateEmployment borderAll" style={{background: time[1]}}>
+                                    <div className="employment borderAll" style={{background: time[1]}}>
                                         {time[0]}
                                         <i className="fa fa-times delete pull-right" data-day={day} data-time={time[0]} onClick={element.removeEmployment} aria-hidden="true"></i>
                                     </div>
@@ -152,7 +152,7 @@ var Template = React.createClass({
                         }
 
                         return(
-                                <div className="templateTableBody">
+                                <div className="tableBody">
                                    <h4 className="borderBottom">{day}</h4>
                                    <div className="borderAll">
                                         {times ? times : ''}
@@ -167,7 +167,6 @@ var Template = React.createClass({
             <div>
                 
                     <h2>Template</h2>
-                    <div className="text-center">
                         <div className="row">
                             <div className="col-xs-12 col-sm-10">
                                 <form className="form-inline">
@@ -175,7 +174,7 @@ var Template = React.createClass({
                                     <select className="form-control" ref="type">{selectType}</select>
                                     <input className="form-control" type="time" ref="from" />
                                     <input className="form-control" type="time" ref="till" />
-                                    <input className="form-control" type="button" value="Add" onClick={element.handleSubmit} />
+                                    <input className="btn" type="button" value="Add" onClick={element.handleSubmit} />
                                 </form>
                             </div>
                         </div>
@@ -184,7 +183,6 @@ var Template = React.createClass({
                                 {days}
                             </div>    
                         </div>
-                    </div>
                 
             </div>
         )

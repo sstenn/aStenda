@@ -1,6 +1,23 @@
 body{
-	background-color: white;
-}
+  font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+  margin-top: 15px;
+  background: #b5d9ef;
+  background: -moz-linear-gradient(top, #b5d9ef 0%, #d1d2d3 100%);
+  background: -webkit-linear-gradient(top, #b5d9ef 0%,#d1d2d3 100%);
+  background: linear-gradient(to bottom, #b5d9ef 0%,#d1d2d3 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5d9ef', endColorstr='#d1d2d3',GradientType=0 );
+  }
+
+  .login{
+    width: 30%;
+    padding-top: 20px;
+    height: 200px;
+    border: 2px solid #e7e7e7;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    text-align: center;
+  }
 
 @media (min-width: 768px) {
   .sidebar-nav .navbar .navbar-collapse {
@@ -22,10 +39,31 @@ body{
     padding-bottom: 12px;
   }
 }
+.navbar-default{
+  background-color: transparent;
+  text-align: center;
+  border-width: 2px;
+  border-radius: 0;
+}
+
+.navbar-default .navbar-nav > li > a:hover{
+  background-color: #009f50;
+}
+.navbar-default .navbar-nav > li > a:focus{
+  text-decoration: underline;
+}
+.navbar-default .navbar-nav > .open > a{
+  background-color: #009f50 !important;
+}
+
+.dropdown-menu{
+  text-align: center;
+  background-color: #f6fafd;
+  width: 100%;
+}
 
 .content{
 	height: 100%;
-	border-left: 2px solid #707c83;
   padding-left: 3%;
 }
 
@@ -40,6 +78,9 @@ body{
 
 .badge:hover{
   cursor: pointer;
+}
+.panel, .form-control{
+  background-color: #f6fafd;
 }
 
 .borderRight{
@@ -57,7 +98,7 @@ body{
 .borderAll{
   border: 1px solid #eee;
 }
-.templateTableBody{
+.tableBody{
   padding: 0;
   width: 14.2857%;
   display: inline-block;
@@ -65,15 +106,18 @@ body{
   position: relative;
 }
 @media (max-width: 992px){
-  .templateTableBody{
+  .tableBody{
     width: 100%;
   }
 }
 
-.templateEmployment{
-  min-height: 30px;
+.employment{
+  min-height: 50px;
   padding-top: 5px;
   padding-right: 5px;
+}
+.employment:hover{
+  cursor: pointer;
 }
 
 .templateColorOption:hover{
@@ -82,12 +126,47 @@ body{
 }
 .delete:hover{
   cursor: pointer;
-  color: red;
+  color: #9f0000;
 }
 .approved{
-  color: green;
+  color: #009f50;
 }
 .approve:hover{
   cursor: pointer;
-  color: green;
+  color: #009f50;
+}
+
+.requestDate{
+  width: 60% !important;
+}
+.requestTime{
+  width: 40% !important;
+}
+.input-group-addon{
+  min-width: 80px !important;
+}
+.logo-wrapper{
+  width: 100%;
+}
+.logo{
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  height: auto;
+}
+@media (max-width: 992px){
+  .logo-wrapper{
+    display: none;
+  }
+}
+
+.scheduleMakerUsers{
+  margin-top: 50px;
+}
+
+.selectedUser a{
+  color: #009f50;
+  font-size: 1.2em;
+  text-decoration: none;
+  border-bottom: 2px solid #9f0000;
 }

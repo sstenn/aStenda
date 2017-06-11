@@ -6,6 +6,7 @@ var Skip = React.createClass({
     getInitialState: function(){
         return({
             role: 0,
+            rerender: 'false',
         })
     },
 
@@ -13,17 +14,18 @@ var Skip = React.createClass({
         this.setState({role: localStorage.getItem('userRole')})
     },
 
+    rerender: function(){
+        this.setState({rerender: 'true'})
+    },
+
     render: function(){
 
         return (
            <div>
                 <h2>Skip a day</h2>
-                    {
-                        this.state.role > 80 &&
-                        <Requests />
-                    }
+                    <Request rerender={this.rerender} />
 
-                    <Request />
+                    <Requests rerender={this.state.rerender} />
             </div>  
             )
 }
