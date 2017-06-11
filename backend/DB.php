@@ -22,8 +22,7 @@ class db {
         if($sort){$query .= " ORDER BY " .$sort;}
         if($limit){$query .= " LIMIT " .$limit;}
         $query .= ";";
-
-        //var_dump($query);die();
+                    
         
         return $this->_db->query($query);
 
@@ -35,6 +34,7 @@ class db {
         if($condition3){$query .= " AND " .$condition3['key'].$condition3['constructor']."'".$condition3['value']. "'";}
         $query .= ";";
 
+        //var_dump($query);die;
 
         return $this->_db->query($query);
     }
@@ -54,7 +54,7 @@ class db {
 
     }
 
-    public function update($table, $value, $condition){
+    public function update($table, $value, $condition, $condition2=false, $condition3=false){
         $update = array();
 
         foreach($value as $key=>$val){
@@ -64,7 +64,10 @@ class db {
 
         $finalUpdate = implode(',', $update);
 
-        $query = "UPDATE " .$table. " SET " .$finalUpdate. " WHERE " .$condition['key'].$condition['constructor']."'".$condition['value']. "';";
+        $query = "UPDATE " .$table. " SET " .$finalUpdate. " WHERE " .$condition['key'].$condition['constructor']."'".$condition['value']. "'";
+        if($condition2){$query .= " AND " .$condition2['key'].$condition2['constructor']."'".$condition2['value']. "'";}
+        if($condition3){$query .= " AND " .$condition3['key'].$condition3['constructor']."'".$condition3['value']. "'";}
+        $query .= ";";
 
         return $this->_db->query($query);
     }

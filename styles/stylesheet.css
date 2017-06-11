@@ -19,6 +19,49 @@ body{
     text-align: center;
   }
 
+  @media (max-width: 1200px){
+    .login{
+      width: 60%;
+    }
+  }
+
+  @media (max-width: 992px){
+    .login{
+      width: 90%;
+    }
+  }
+
+  .brand{
+    margin-top: 56px;
+  }
+
+  .brand h1{
+    font-size: 80px;
+    color: #e7e7e7; /*#76b9e1;*/
+  }
+
+  .sidebar-brand{
+    width: 100%;
+  }
+  .sidebar-brand h1{
+    text-align: center;
+    font-size: 40px;
+    color: #e7e7e7; 
+    margin-bottom: -7px;
+  }
+
+@media (max-width: 1200px){
+  .sidebar-brand h1{
+    font-size: 30px;
+  }
+}  
+
+@media (max-width: 992px){
+  .sidebar-brand{
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .sidebar-nav .navbar .navbar-collapse {
     padding: 0;
@@ -44,6 +87,7 @@ body{
   text-align: center;
   border-width: 2px;
   border-radius: 0;
+  padding-top: 15px;
 }
 
 .navbar-default .navbar-nav > li > a:hover{
@@ -109,6 +153,13 @@ body{
   .tableBody{
     width: 100%;
   }
+}
+
+.fullDay{
+  margin-bottom: 10px;
+}
+.dateDay{
+  margin-bottom: 0;
 }
 
 .employment{

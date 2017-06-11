@@ -30,8 +30,8 @@ class Template {
 	{
 		$return				= array();
 
-		$q  = 'select * from template';
-		$q .= ' left join types on template.type_id = types.id';
+		$q  = 'select tem.id as tem_id, tem.week_day, tem.time_from, tem.time_till, typ.id as typ_id, typ.color, typ.name from template as tem';
+		$q .= ' left join types as typ on tem.type_id = typ.id';
 		$q .= ' order by time_from, time_till desc';
 
 		$template 			= $this->_db->query($q);
@@ -39,7 +39,7 @@ class Template {
 		$res 			    = $this->_db->get_row_array($template);
 
 		foreach($res as $key => $value){
-			$time = $value['time_from'] . '-' . $value['time_till'] . '|' . $value['color'];
+			$time = $value['time_from'] . '-' . $value['time_till'] . '|' . $value['color'] . '|' . $value['tem_id'];
 
 			$return[$value['week_day']][] = $time;
 

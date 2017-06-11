@@ -27,6 +27,7 @@ var Home = React.createClass({
                 <div className="menu col-md-2">
                     <div className="sidebar-nav">
                         <div className="sidebar-nav">
+                            <div className="sidebar-brand"><h1>aStenda</h1></div>
                             <div className="navbar navbar-default" role="navigation">
                                 <div className="navbar-header">
                                     <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
@@ -53,6 +54,9 @@ var Home = React.createClass({
                                                 }
                                                 { role > 80 &&
                                                     <li><ReactRouter.Link to="/template">Template</ReactRouter.Link></li>
+                                                }
+                                                { role > 80 &&
+                                                    <li><ReactRouter.Link to="/types">Types</ReactRouter.Link></li>
                                                 }
                                                 <li><ReactRouter.Link to="/skipaday">Skip a day</ReactRouter.Link></li>
                                             </ul>

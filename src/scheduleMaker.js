@@ -24,7 +24,7 @@ var ScheduleMaker = React.createClass({
         element.loadUsers();
         element.loadTempSchedule();
 
-        for(var i=0 ; i<=52 ; i++){
+        for(var i=1 ; i<=52 ; i++){
 
             //if week nr nog niet voorkomt in roosters die klaar zijn dan  || Bij het selecteren of er al een rooster bestaat
             element.state.weeks.push(i);
@@ -123,7 +123,7 @@ var ScheduleMaker = React.createClass({
 
         var element = this;
 
-        var week = element.refs.week.value;
+        var week = (element.refs.week.value -1);
         var year = element.refs.year.value;
 
         var current = element.getCurrentWeekAndYear();
@@ -177,6 +177,7 @@ var ScheduleMaker = React.createClass({
 
         var times   = e.target.getAttribute('data-time');
         var date    = e.target.getAttribute('data-date');
+        var unique  = e.target.getAttribute('data-unique');
         var user_id = element.state.selectedUser;
 
         if(user_id == ''){
@@ -189,13 +190,14 @@ var ScheduleMaker = React.createClass({
                 'param' : {
                     'times'  : times,
                     'date'   : date,
-                    'user_id': user_id
+                    'user_id': user_id,
+                    'unique' : unique
                 }
             }
 
             $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
 
-                
+                element.loadTempSchedule();    
 
             })
         }
@@ -207,6 +209,7 @@ var ScheduleMaker = React.createClass({
         var element = this;
 
         var template = element.state.template;
+        var tempSchedule = element.state.tempSchedule;
 
         const selectWeek = element.state.weeks.map((w, i) => {
             if(w){
@@ -233,12 +236,13 @@ var ScheduleMaker = React.createClass({
                             var times = template[fullDay].map((val, i) => {
                                 var time = val.split('|');
 
-                                //tempSchedule[{day}{time[0]}{time[1]]}]
+                                var key = time[0] + day + time[2];
+                                var employee = tempSchedule[key];
 
                                 return(
-                                    <div className="employment borderAll" data-time={time[0]} data-date={day} style={{background: time[1]}} onClick={element.setUserToEmployment}>
+                                    <div className="employment borderAll" data-unique={time[2]} data-time={time[0]} data-date={day} style={{background: time[1]}} onClick={element.setUserToEmployment}>
                                         {time[0]}
-                                        <div className="employee"></div>
+                                        <div className="employee">{employee}</div>
                                     </div>
                                 )   
                             })
@@ -246,7 +250,8 @@ var ScheduleMaker = React.createClass({
 
                         return(
                                 <div className="tableBody">
-                                   <h4 className="borderBottom">{day}</h4>
+                                   <h4 className="borderBottom dateDay">{day}</h4>
+                                   <div className="fullDay">{fullDay}</div>
                                    <div className="borderAll">
                                         {times ? times : ''}
                                    </div> 

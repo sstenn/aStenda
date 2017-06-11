@@ -27,7 +27,7 @@ class Request {
 		$q2 .= ' where approved = true';
 		$q2 .= $param['role'] < 80 ? ' and google_id = "' . $param['user_id'] . '"' : '';
 		$q2 .= ' order by req.id desc';
-		$q2 .= ' limit 10';
+		$q2 .= ' limit 8';
 		
 		$approved 			= $this->_db->query($q2);
 		

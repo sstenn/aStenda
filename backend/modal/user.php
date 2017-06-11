@@ -89,13 +89,11 @@ class User {
 
 	public function allUsers($param)
 	{
-		$users 			= $this->_db->select('*', 'users');
-		$pendingUsers 	= $this->_db->select('*', 'pending_users');
+		$users 			= $this->_db->select('*', 'users', false, false, 'naam');
+		$pendingUsers 	= $this->_db->select('*', 'pending_users', false, false, 'gmail');
 		
 		$return['users'] 			= $this->_db->get_row_array($users);
 		$return['pending_users']	= $this->_db->get_row_array($pendingUsers);
-
-		//var_dump($return);die();
 
 		return $return;
 	}

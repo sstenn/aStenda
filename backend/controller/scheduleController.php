@@ -19,5 +19,16 @@ class scheduleController
         return $setTempEmployment;      
     }
 
+    function getTempSchedule($param)
+    {   
+
+        $schedule = new Schedule();
+
+        $getTempSchedule = $schedule->getTempSchedule($param);
+
+        return $getTempSchedule;      
+    }
+
+
 
  }

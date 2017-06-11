@@ -30,7 +30,11 @@ if(userId){
           buttonText="Login"
           prompt="select_account"
           onSuccess={loginSuccess}
-          onFailure={loginFailure} /></div>, document.getElementById('app')
+          onFailure={loginFailure} />
+
+          <div className="brand"><h1>aStenda</h1></div>
+
+    </div>, document.getElementById('app')
   );  
 
 }
