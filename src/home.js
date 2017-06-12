@@ -13,14 +13,17 @@ var Home = React.createClass({
         this.setState({role: localStorage.getItem('userRole')})
     },
 
+    logout: function(){
+        localStorage.setItem('userRole', 0);
+        localStorage.setItem('userGoogleId', '');
+
+        window.location = "http://localhost/aStenda/";
+    },
+
     render: function(){
-        //console.log(sessionStorage.getItem('userRole'))
+        var element = this;
 
         const role = this.state.role;
-
-        //console.log(role);
-
-        //const intRole = parseInt(role);
 
         return (
             <div>
@@ -61,7 +64,7 @@ var Home = React.createClass({
                                                 <li><ReactRouter.Link to="/skipaday">Skip a day</ReactRouter.Link></li>
                                             </ul>
                                         </li>
-                                        <li><ReactRouter.Link to="/logout"><i className="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</ReactRouter.Link></li>
+                                        <li className="logout" onClick={element.logout}><a><i className="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a></li>
                                     </ul>
                                 </div>
 

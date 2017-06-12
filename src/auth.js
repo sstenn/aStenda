@@ -9,7 +9,7 @@ var Auth = React.createClass({
 			userId: this.props.id,
 			userName: this.props.name,
 			userMail: this.props.mail,
-			role: 0,
+			role: false,
 		})
 	},
     
@@ -95,7 +95,6 @@ var Auth = React.createClass({
 	setSession: function(role){		
 
 		localStorage.setItem('userRole', role);
-		
 		localStorage.setItem('userGoogleId', this.state.userId);
 
 	},
@@ -108,8 +107,12 @@ var Auth = React.createClass({
 
 			return (
 				<div>
-						  
-					<Navbar role={this.state.role} />
+					{this.state.role ? (
+						<Navbar role={this.state.role} />
+					) : (
+						null
+					)}	  
+					
 						
 		
 				</div>	

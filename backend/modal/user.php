@@ -140,4 +140,17 @@ class User {
 
 	}
 
+	public function removeUser($param)
+	{
+		$table = $param['table'];
+
+		$condition = array(
+			'key'	      => 'id',
+			'constructor' => '=',
+			'value'		  => $param['id']
+		);
+
+		return $this->_db->delete($table, $condition);
+	}
+
 }

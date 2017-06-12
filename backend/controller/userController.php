@@ -57,4 +57,14 @@ class userController
 
         return $inviteNewUser;      
     }
+
+    function removeUser($param)
+    {
+
+        $user = new User();
+
+        $removeUser = $user->removeUser($param);
+
+        return $removeUser;      
+    }
 }

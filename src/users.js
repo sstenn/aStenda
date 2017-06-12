@@ -1,4 +1,4 @@
-var Confirm = require('./confirm.js');
+var Popup = require('./popup.js');
 
 
 var Users = React.createClass({
@@ -11,15 +11,17 @@ var Users = React.createClass({
             ajaxUrl: './backend/index.php',
             errorMessage: '',
             showConfirm: false,
+            param: [],
         })
     },
 
     componentWillMount: function(){
         this.loadUsers();
+
     },
 
     shouldComponentUpdate: function(nextProps, nextState){
-        //console.log(nextProps, nextState);
+        //console.log(this.state, nextState);
         if(nextState != this.state || nextProps != this.props){
             return true
         }else{
@@ -112,22 +114,53 @@ var Users = React.createClass({
 
     },
 
-    removeUser: function(e){
+    popup: function(e){
         e.preventDefault();
 
-        //console.log(e);
+        var table = e.target.getAttribute('data-table');
+        var id    = e.target.getAttribute('data-id');
+
+        var param = {
+            'table' : table,
+            'id'    : id
+        }
+
+        this.setState({
+            param: [param]
+        })
 
         this.setState({showConfirm: true});
 
     },
 
-    render: function(){
+    removeUser: function(action){
         var element = this;
 
-        {element.state.showConfirm ?
-           <Confirm /> :
-           null
+        if(action == "Yes"){
+            
+            var param = {
+                'c'     : 'user',
+                'a'     : 'removeUser',
+                'param' : {
+                    'table' : element.state.param[0]['table'],
+                    'id'    : element.state.param[0]['id']
+                }
+            }
+
+            //console.log(param)
+
+            $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
+                element.setState({showConfirm: false});
+                element.loadUsers();
+            })
+
+        }else{
+            element.setState({showConfirm: false});
         }
+    },
+
+    render: function(){
+        var element = this;
 
         //console.log(element.state.showConfirm);
     
@@ -138,7 +171,7 @@ var Users = React.createClass({
                                 <div>
                                     <div className="panel-body">
                                         <a href="#" onClick={element.handleUserClick} >{user.naam}</a>
-                                        <i className="fa fa-times pull-right delete" aria-hidden="true" onClick={element.removeUser}></i> 
+                                        <i className="fa fa-times pull-right delete" data-table="users" data-id={user.id} aria-hidden="true" onClick={element.popup}></i> 
                                     </div>
                                 </div>
                             )
@@ -150,7 +183,7 @@ var Users = React.createClass({
                                 <div>
                                     <div className="panel-body">
                                         <a href="#" onClick={element.handlePendingUserClick} >{pUser.gmail}</a>
-                                        <i className="fa fa-times pull-right delete" aria-hidden="true" onClick={element.removeUser}></i>
+                                        <i className="fa fa-times pull-right delete" data-table="pending_users" data-id={pUser.id} aria-hidden="true" onClick={element.popup}></i>
                                     </div>
                                 </div>
                             )
@@ -186,6 +219,11 @@ var Users = React.createClass({
                             <div className="panel panel-default">{pendingUsers}</div>
                     </div>
                 </div>
+                {element.state.showConfirm ? (
+                    <Popup message="Are you sure?" handleClick={element.removeUser} />
+                ) : (
+                    null
+                )}
             </div>
         )
     }

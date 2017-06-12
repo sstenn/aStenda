@@ -24,7 +24,7 @@ var ScheduleMaker = React.createClass({
         element.loadUsers();
         element.loadTempSchedule();
 
-        for(var i=1 ; i<=52 ; i++){
+        for(var i=1 ; i<53 ; i++){
 
             //if week nr nog niet voorkomt in roosters die klaar zijn dan  || Bij het selecteren of er al een rooster bestaat
             element.state.weeks.push(i);
@@ -123,12 +123,12 @@ var ScheduleMaker = React.createClass({
 
         var element = this;
 
-        var week = (element.refs.week.value -1);
+        var week = (element.refs.week.value);
         var year = element.refs.year.value;
 
         var current = element.getCurrentWeekAndYear();
 
-        if(week < current[0] || year < current[1])
+        if((week < current[0] && year == current[1]) || year < current[1])
         {
             element.setState({errorMessage: 'This week is in the past'});
         }
@@ -301,7 +301,7 @@ var ScheduleMaker = React.createClass({
                 </div>
             </div>  
             )
-}
+    }
 });
 
 module.exports = ScheduleMaker;

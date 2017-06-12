@@ -19,5 +19,40 @@ class typeController
         return $getAllTypes;      
     }
 
+    function updateColor($param)
+    {
+        $type = new Type();
+
+        $updateColor = $type->updateColor($param);
+
+        return $updateColor; 
+    }
+
+    function changeName($param)
+    {
+        $type = new Type();
+
+        $changeName = $type->changeName($param);
+
+        return $changeName; 
+    }
+
+    function addType($param)
+    {
+        $type = new Type();
+
+        $addType = $type->addType($param);
+
+        return $addType; 
+    }
+
+    function removeType($param)
+    {
+        $type = new Type();
+
+        $removeType = $type->removeType($param);
+
+        return $removeType; 
+    }
 
  }

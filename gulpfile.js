@@ -12,8 +12,8 @@ var notify = require('gulp-notify');
 var path = {
 
   HTML: 'index.html',
-  ALL: ['src/types.js', 'src/scheduleMaker.js', 'src/request.js', 'src/requests.js' ,'src/app.js', 'src/navbar.js', 'src/home.js', 'src/agenda.js', 'src/template.js', 'src/auth.js', 'src/logout.js', 'src/users.js', 'src/failpage.js', 'src/skipaday.js', 'src/confirm.js', 'index.html'],
-  JS: ['src/types.js', 'src/scheduleMaker.js', 'src/request.js', 'src/requests.js', 'src/app.js', 'src/navbar.js', 'src/home.js', 'src/agenda.js', 'src/template.js', 'src/auth.js', 'src/logout.js', 'src/failpage.js', 'src/skipaday.js', 'src/confirm.js', 'src/users.js'],
+  ALL: ['src/types.js', 'src/scheduleMaker.js', 'src/request.js', 'src/requests.js' ,'src/app.js', 'src/navbar.js', 'src/home.js', 'src/agenda.js', 'src/template.js', 'src/auth.js', 'src/logout.js', 'src/users.js', 'src/failpage.js', 'src/skipaday.js', 'src/popup.js', 'index.html'],
+  JS: ['src/types.js', 'src/scheduleMaker.js', 'src/request.js', 'src/requests.js', 'src/app.js', 'src/navbar.js', 'src/home.js', 'src/agenda.js', 'src/template.js', 'src/auth.js', 'src/logout.js', 'src/failpage.js', 'src/skipaday.js', 'src/popup.js', 'src/users.js'],
   MINIFIED_OUT: 'build/new.js',
   DEST_SRC: 'dist/src',
   DEST_BUILD: 'dist/build',
