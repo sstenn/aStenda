@@ -21,7 +21,7 @@ var Popup = React.createClass({
         var name = e.target.className; 
         var action = e.target.value;
 
-        console.log(name)   
+        //console.log(name)   
 
         if(name == 'confirm-bg' || typeof action !== 'undefined'){
 

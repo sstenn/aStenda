@@ -1,3 +1,5 @@
+var Popup = require('./popup.js');
+
 var ScheduleMaker = React.createClass({
 
     getInitialState: function(){
@@ -14,6 +16,9 @@ var ScheduleMaker = React.createClass({
             users: [],
             selectedUser: '',
             tempSchedule: [],
+            param: [],
+            activeWeek: 0,
+            activeYear: 0,
         })
     },
 
@@ -134,7 +139,7 @@ var ScheduleMaker = React.createClass({
         }
         else
         {
-            element.setState({errorMessage: ''});
+            element.setState({errorMessage: '', activeWeek: week, activeYear: year});
 
             var startDate = element.getFirstDayOfWeek(week, year);
 
@@ -180,6 +185,9 @@ var ScheduleMaker = React.createClass({
         var unique  = e.target.getAttribute('data-unique');
         var user_id = element.state.selectedUser;
 
+
+        element.setState({errorMessage: ''});
+
         if(user_id == ''){
             return false;
         }else{
@@ -197,12 +205,56 @@ var ScheduleMaker = React.createClass({
 
             $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
 
-                element.loadTempSchedule();    
-
+                if(!data){
+                    element.setState({errorMessage: 'You approved a day off request on this date for this user!'});
+                }else{
+                    element.loadTempSchedule();
+                }
             })
         }
 
         element.setState({selectedUser: ''});
+    },
+
+    popup: function(e){
+        e.preventDefault();
+
+        var element = this;
+
+        if(element.state.days.length > 0){
+            this.setState({showConfirm: true});
+        }else{
+            return false;
+        }
+
+        
+
+    },
+
+    sendSchedule: function(action){
+        var element = this;
+
+        if(action == "Yes"){
+            
+            var param = {
+                'c'     : 'schedule',
+                'a'     : 'sendSchedule',
+                'param' : {
+                    'first'   : element.state.days[0],
+                    'last'    : element.state.days[6],
+                    'week'    : element.state.activeWeek,
+                    'year'    : element.state.activeYear
+                }
+            }
+
+            $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
+                element.setState({errorMessage: 'Schedule sent!'});
+            })
+
+        }
+        
+        element.setState({showConfirm: false});
+
     },
 
     render: function(){
@@ -242,7 +294,13 @@ var ScheduleMaker = React.createClass({
                                 return(
                                     <div className="employment borderAll" data-unique={time[2]} data-time={time[0]} data-date={day} style={{background: time[1]}} onClick={element.setUserToEmployment}>
                                         {time[0]}
-                                        <div className="employee">{employee}</div>
+                                        <div className="employee">{employee}
+                                        { typeof employee != 'undefined' ? (
+                                            <i className="fa fa-check fa-fw" aria-hidden="true"></i>
+                                        ) : (
+                                            null
+                                        )}
+                                        </div>
                                     </div>
                                 )   
                             })
@@ -278,15 +336,18 @@ var ScheduleMaker = React.createClass({
 
         return (
             <div>
+                <div className="errorMessage">{element.state.errorMessage}</div>
                 <h2>Schedule maker</h2>
                 <div className="row">
-                    <div className="col-xs-12 col-sm-10">
+                    <div className="col-xs-6 col-sm-6">
                         <form className="form-inline">
                             <select className="form-control" ref="week">{selectWeek}</select>
                             <select className="form-control" ref="year">{selectYear}</select>
                             <input className="btn" type="button" value="Select" onClick={element.handleSubmit} />
                         </form>
-                        <div className="col-md-8">{element.state.errorMessage}</div>
+                    </div>
+                    <div className="col-xs-6 col-sm-6">
+                        <input className="btn" type="button" value="Send!" onClick={element.popup} />
                     </div>
                 </div>
                 <div className="row">
@@ -299,6 +360,11 @@ var ScheduleMaker = React.createClass({
                         <div className="panel panel-default"><div className="row">{users}</div></div>
                     </div>
                 </div>
+                {element.state.showConfirm ? (
+                    <Popup message="Send this schedule?" handleClick={element.sendSchedule} />
+                ) : (
+                    null
+                )}
             </div>  
             )
     }

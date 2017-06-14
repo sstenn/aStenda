@@ -29,6 +29,15 @@ class scheduleController
         return $getTempSchedule;      
     }
 
+    function sendSchedule($param)
+    {
+        $schedule = new Schedule();
+
+        $sendSchedule = $schedule->sendSchedule($param);
+
+        return $sendSchedule; 
+    }
+
 
 
  }
