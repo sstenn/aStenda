@@ -29,6 +29,16 @@ class scheduleController
         return $getTempSchedule;      
     }
 
+    function getSchedule($param)
+    {   
+
+        $schedule = new Schedule();
+
+        $getSchedule = $schedule->getSchedule($param);
+
+        return $getSchedule;      
+    }
+
     function sendSchedule($param)
     {
         $schedule = new Schedule();
@@ -38,6 +48,23 @@ class scheduleController
         return $sendSchedule; 
     }
 
+    function loadWeeks($param)
+    {
+        $schedule = new Schedule();
+
+        $loadWeeks = $schedule->loadWeeks($param);
+
+        return $loadWeeks;         
+    }
+
+    function loadActivities($param)
+    {
+        $schedule = new Schedule();
+
+        $loadActivities = $schedule->loadActivities($param);
+
+        return $loadActivities;         
+    }
 
 
  }

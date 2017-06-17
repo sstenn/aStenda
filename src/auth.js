@@ -9,6 +9,7 @@ var Auth = React.createClass({
 			userId: this.props.id,
 			userName: this.props.name,
 			userMail: this.props.mail,
+			failed: false,
 			role: false,
 		})
 	},
@@ -58,11 +59,11 @@ var Auth = React.createClass({
 				//Nieuwe gebruiker op aanvraag van beheerder
 				element.setNewUser();
 				element.setSession(data['new'][0]['rol']);
-				element.setState({'role': data['active'][0]['rol']});
+				element.setState({'role': data['new'][0]['rol']});
 			}else{
 				//Nieuwe gebruiker die niet word toegelaten op de app
-				//element.setState({'active': false});
-				<Failpage />
+				element.setState({'failed': true});
+				//<Failpage />
 			}
 
 		});
@@ -107,14 +108,19 @@ var Auth = React.createClass({
 
 			return (
 				<div>
-					{this.state.role ? (
-						<Navbar role={this.state.role} />
+					{this.state.failed ? (
+						<Failpage />
 					) : (
-						null
-					)}	  
-					
-						
-		
+						<div>
+							{this.state.role ? (
+								<Navbar role={this.state.role} />
+							) : (
+								null
+							)}	  
+
+				
+						</div>
+					)}
 				</div>	
 				)
 	

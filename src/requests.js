@@ -93,14 +93,29 @@ var Requests = React.createClass({
         var element = this;
 
         const pending = this.state.pending.map((request, i) => {
+
+            var dateTimeFrom = request.time_from.split(" ");            
+            var aDateFrom    = dateTimeFrom[0].split("-");
+            var dateFrom     = aDateFrom[2] + '-' + aDateFrom[1] + '-' + aDateFrom[0];
+            var aTimeFrom    = dateTimeFrom[1].split(":");
+            var timeFrom     = aTimeFrom[0] + ':' + aTimeFrom[1];
+            var datetimefrom = dateFrom + ' ' + timeFrom;
+
+            var dateTimeTill = request.time_till.split(" ");            
+            var aDateTill    = dateTimeTill[0].split("-");
+            var dateTill     = aDateTill[2] + '-' + aDateTill[1] + '-' + aDateTill[0];
+            var aTimeTill    = dateTimeTill[1].split(":");
+            var timeTill     = aTimeTill[0] + ':' + aTimeTill[1];
+            var datetimetill = dateTill + ' ' + timeTill;
+
             if(request){
                 return(
                     <div>
                         <div className="panel-body">
                             <div className="row">
                                 <div className="col-sm-3">{request.naam}</div>
-                                <div className="col-sm-4">{request.time_from}</div>
-                                <div className="col-sm-4">{request.time_till}</div>
+                                <div className="col-sm-4">{datetimefrom}</div>
+                                <div className="col-sm-4">{datetimetill}</div>
                                 <div className="col-sm-1">
                                 {   element.state.role > 80 &&
                                     <i className="fa fa-check approve" data-request={request.req_id} data-user={request.usr_id} aria-hidden="true" onClick={element.approveRequest}></i>

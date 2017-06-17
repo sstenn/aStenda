@@ -107,20 +107,11 @@ var ScheduleMaker = React.createClass({
     },
 
     getFirstDayOfWeek: function(w, y) {
-        var simple = new Date(y, 0, 1 + (w - 1) * 7);
-        var dd = simple.getDate();
-        var mm = simple.getMonth() +1;
-        var Y  = simple.getFullYear();
+        var today = new Date(y, 0, 1 + (w - 1) * 7);
+        var dayOfWeekStartingSundayZeroIndexBased = today.getDay(); // 0 : Sunday ,1 : Monday,2,3,4,5,6 : Saturday
+        var mondayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()+1);
 
-        var weekStart = simple;
-        
-        if (dd <= 4)
-            weekStart.setDate(simple.getDate() - simple.getDay() + 1);
-        else
-            weekStart.setDate(simple.getDate() + 8 - simple.getDay());
-
-
-        return weekStart;
+        return mondayOfWeek;
     },
 
     handleSubmit: function(e){
@@ -203,6 +194,8 @@ var ScheduleMaker = React.createClass({
                 }
             }
 
+            console.log(e.target);
+
             $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
 
                 if(!data){
@@ -231,7 +224,7 @@ var ScheduleMaker = React.createClass({
 
     },
 
-    sendSchedule: function(action){
+    sendSchedule: function(action=false){
         var element = this;
 
         if(action == "Yes"){
@@ -248,12 +241,14 @@ var ScheduleMaker = React.createClass({
             }
 
             $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
+                element.setState({showConfirm: false});
                 element.setState({errorMessage: 'Schedule sent!'});
             })
 
-        }
+        }else{
         
-        element.setState({showConfirm: false});
+            element.setState({showConfirm: false});
+        }
 
     },
 
@@ -294,7 +289,7 @@ var ScheduleMaker = React.createClass({
                                 return(
                                     <div className="employment borderAll" data-unique={time[2]} data-time={time[0]} data-date={day} style={{background: time[1]}} onClick={element.setUserToEmployment}>
                                         {time[0]}
-                                        <div className="employee">{employee}
+                                        <div className="employee" data-unique={time[2]} data-time={time[0]} data-date={day}>{employee}
                                         { typeof employee != 'undefined' ? (
                                             <i className="fa fa-check fa-fw" aria-hidden="true"></i>
                                         ) : (
@@ -339,15 +334,15 @@ var ScheduleMaker = React.createClass({
                 <div className="errorMessage">{element.state.errorMessage}</div>
                 <h2>Schedule maker</h2>
                 <div className="row">
-                    <div className="col-xs-6 col-sm-6">
+                    <div className="col-xs-6 col-sm-5">
                         <form className="form-inline">
                             <select className="form-control" ref="week">{selectWeek}</select>
                             <select className="form-control" ref="year">{selectYear}</select>
                             <input className="btn" type="button" value="Select" onClick={element.handleSubmit} />
                         </form>
                     </div>
-                    <div className="col-xs-6 col-sm-6">
-                        <input className="btn" type="button" value="Send!" onClick={element.popup} />
+                    <div className="col-xs-6 col-sm-5">
+                        <input className="btn pull-right" type="button" value="Publish!" onClick={element.popup} />
                     </div>
                 </div>
                 <div className="row">
@@ -361,7 +356,7 @@ var ScheduleMaker = React.createClass({
                     </div>
                 </div>
                 {element.state.showConfirm ? (
-                    <Popup message="Send this schedule?" handleClick={element.sendSchedule} />
+                    <Popup message="Publish this schedule?" handleClick={element.sendSchedule} />
                 ) : (
                     null
                 )}

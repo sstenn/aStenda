@@ -18,24 +18,22 @@ var Popup = React.createClass({
     handleClick: function(e){
         e.preventDefault();
 
-        var name = e.target.className; 
+        //var name = e.target.className; 
         var action = e.target.value;
 
         //console.log(name)   
 
-        if(name == 'confirm-bg' || typeof action !== 'undefined'){
+        //if(name == 'confirm-bg' || typeof action !== 'undefined'){
 
-            this.props.handleClick(action)
-        }
+        this.props.handleClick(action)
+        //}
     },
 
     render: function(){
-        //console.log('confirm')
-
 
         return (
-            <div className="confirm-bg" onClick={this.handleClick}>
-               <div className="confirm col-md-2 col-md-offset-5" onClick={this.handleClick}>
+            <div className="confirm-bg">
+               <div className="confirm col-md-2 col-md-offset-5">
                     <div className="row message">{this.props.message}</div>
                     <div className="row buttons">
                         <input className="btn btn-default" type="button" value="Yes" onClick={this.handleClick} />

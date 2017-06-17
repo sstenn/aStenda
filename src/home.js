@@ -52,6 +52,7 @@ var Home = React.createClass({
                                         <li className="dropdown">
                                             <a className="dropdown-toggle" data-toggle="dropdown" href="#"><i className="fa fa-tasks fa-fw" aria-hidden="true"></i> Schedule<span className="caret"></span></a>
                                             <ul className="dropdown-menu">
+                                                <li><ReactRouter.Link to="/schedule">Schedule</ReactRouter.Link></li>
                                                 { role > 80 &&
                                                     <li><ReactRouter.Link to="/scheduleMaker">Make schedule</ReactRouter.Link></li>
                                                 }

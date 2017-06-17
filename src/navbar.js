@@ -4,8 +4,8 @@ var Users = require('./users.js');
 var Template = require('./template.js');
 var Types = require('./types.js');
 var ScheduleMaker = require('./scheduleMaker.js');
+var Schedule = require('./schedule.js');
 var Skip = require('./skipaday.js');
-var Logout = require('./logout.js');
 
 var { Router,
   Route,
@@ -42,11 +42,11 @@ var { Router,
             <IndexRoute component={Agenda}/> // Default page
             <Route path="users" component={Users} />
             <Route path="agenda" component={Agenda} />
+            <Route path="schedule" component={Schedule} />
             <Route path="scheduleMaker" component={ScheduleMaker} />
             <Route path="template" component={Template} />
             <Route path="types" component={Types} />
             <Route path="skipaday" component={Skip} />
-            <Route path="logout" component={Logout} />
           </Route>
         </Router>
       )

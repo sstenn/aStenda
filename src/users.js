@@ -171,7 +171,11 @@ var Users = React.createClass({
                                 <div>
                                     <div className="panel-body">
                                         <a href="#" onClick={element.handleUserClick} >{user.naam}</a>
-                                        <i className="fa fa-times pull-right delete" data-table="users" data-id={user.id} aria-hidden="true" onClick={element.popup}></i> 
+                                        { user.rol == 100 ? (
+                                            null
+                                        ) : (
+                                            <i className="fa fa-times pull-right delete" data-table="users" data-id={user.id} aria-hidden="true" onClick={element.popup}></i>
+                                        )} 
                                     </div>
                                 </div>
                             )
@@ -200,14 +204,14 @@ var Users = React.createClass({
                           <div className="input-group">
                             <input id="addUserInput" type="text" className="form-control" placeholder="Add user" />
                             <div className="input-group-btn">
-                              <button className="btn btn-default" onClick={element.handleAddUserClick} >
+                              <button className="btn" onClick={element.handleAddUserClick} >
                                 Add
                               </button>
                             </div>
                           </div>
                         </form>
                     </div>
-                    <div className="col-md-8">{element.state.errorMessage}</div>
+                    <div className="errorMessage">{element.state.errorMessage}</div>
                 </div>
                 <div className="row">
                     <div className="col-md-4">

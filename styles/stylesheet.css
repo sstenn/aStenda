@@ -12,7 +12,8 @@ body{
     width: 30%;
     padding-top: 20px;
     height: 200px;
-    border: 2px solid #e7e7e7;
+    border: 3px solid #e7e7e7;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     margin-left: auto;
     margin-right: auto;
     margin-top: 5%;
@@ -36,18 +37,30 @@ body{
   }
 
   .brand{
-    margin-top: 56px;
+    margin-top: 55px;
   }
 
   .brand h1{
+    text-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     font-size: 80px;
     color: #e7e7e7; /*#76b9e1;*/
+  }
+
+  .errorMessage{
+    position: fixed;
+    top: 0px;
+    right: 16.666666%;
+    width: 50%;
+    text-align: right;
+    border-radius: 5px;
+    padding: 20px 20px 20px 20px;
   }
 
   .sidebar-brand{
     width: 100%;
   }
   .sidebar-brand h1{
+    text-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     text-align: center;
     font-size: 40px;
     color: #e7e7e7; 
@@ -89,7 +102,8 @@ body{
 .navbar-default{
   background-color: transparent;
   text-align: center;
-  border-width: 2px;
+  border-width: 3px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
   border-radius: 0;
   padding-top: 15px;
 }
@@ -189,6 +203,8 @@ body{
   min-height: 50px;
   padding-top: 5px;
   padding-right: 5px;
+  padding-left: 5px;
+  z-index: 300;
 }
 .employment:hover{
   cursor: pointer;
@@ -283,4 +299,39 @@ body{
 
 .colorChooseColor:hover{
   cursor: pointer;
+}
+
+.event{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.eventDetail{
+  padding-top: 20px;
+}
+
+.dateLabel{
+  width: 100px;
+  height: 100px;
+  background-color: #009f50;
+  border: 2px solid #e7e7e7; 
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  text-align: center;
+  padding: 0;
+  color: #333;
+}
+.dateLabel p{
+  font-weight: bold;
+  margin: 0 5px 0 5px;
+}
+.dateLabel .dayNr{
+  font-size: 36px;
+}
+
+.legenda{
+  height: 30px;
+  border: 1px solid #e7e7e7; 
+  text-align: center;
+  padding-top: 4px;
+  font-weight: bold;
 }

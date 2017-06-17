@@ -160,7 +160,7 @@ var Types = React.createClass({
                         <div className="panel-body">
                             <div className="row">
                                 <div className="col-xs-8">
-                                    <input className="form-control typeInput" type="text" data-id={type.id} defaultValue={type.name} onChange={element.changeName} />
+                                    <input className="form-control typeInput" type="text" maxLength="16" data-id={type.id} defaultValue={type.name} onChange={element.changeName} />
                                 </div>
                                 <div className="col-xs-3">
                                     <div id={type.id} className="colorInput" style={{background: type.color}}>
@@ -172,7 +172,11 @@ var Types = React.createClass({
                                     </div>
                                 </div>
                                 <div className="col-xs-1">
-                                    <i className="fa fa-times pull-right delete" data-id={type.id} aria-hidden="true" onClick={element.removeType}></i> 
+                                    { type.id == 1 ? (
+                                        null
+                                    ) : (
+                                        <i className="fa fa-times pull-right delete" data-id={type.id} aria-hidden="true" onClick={element.removeType}></i>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -188,7 +192,7 @@ var Types = React.createClass({
                         <div className="col-xs-12 col-sm-10">
                         <h3>Add type</h3>
                             <form className="form-inline">
-                                <input className="form-control" placeholder="Name" type="text" ref="name" />
+                                <input className="form-control" placeholder="Name" type="text" ref="name" maxLength="16" />
                                 <select className="form-control" ref="color">{selectColor}</select>
                                 <input className="btn" type="button" value="Add" onClick={element.handleSubmit} />
                             </form>
