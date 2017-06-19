@@ -24,16 +24,18 @@ if(userId){
 
 }else{
   ReactDOM.render(
-    <div className="login">
-      <GoogleLogin
-          clientId="486491156289-1kvp2o81li65uq6vvon9odn01crv3fq2.apps.googleusercontent.com"
-          buttonText="Login"
-          prompt="select_account"
-          onSuccess={loginSuccess}
-          onFailure={loginFailure} />
+    <div>
+      <div className="login">
+        <GoogleLogin
+            clientId="486491156289-1kvp2o81li65uq6vvon9odn01crv3fq2.apps.googleusercontent.com"
+            buttonText="Login"
+            prompt="select_account"
+            onSuccess={loginSuccess}
+            onFailure={loginFailure} />
 
-          <div className="brand"><h1>aStenda</h1></div>
-
+            <div className="brand"><h1>aStenda</h1></div>
+            <div className="createdBy">Created by Sten Jansen</div>
+      </div>
     </div>, document.getElementById('app')
   );  
 
