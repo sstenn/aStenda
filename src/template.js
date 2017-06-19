@@ -1,3 +1,5 @@
+var Failpage = require('./failpage.js');
+
 var Template = React.createClass({
     
     getInitialState: function(){
@@ -5,7 +7,8 @@ var Template = React.createClass({
             weekDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             types: [],
             ajaxUrl: './backend/index.php',
-            template: []
+            template: [],
+            role: 0,
         })
     },
 
@@ -13,6 +16,8 @@ var Template = React.createClass({
 
         this.loadTemplate();
         this.loadTypes();
+
+        this.setState({role: localStorage.getItem('userRole')})
 
     },
 
@@ -83,7 +88,6 @@ var Template = React.createClass({
                 'time': time
             }
         } 
-        //console.log(param)
 
         $.post({url: element.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
             element.loadTemplate();
@@ -117,8 +121,6 @@ var Template = React.createClass({
         var element = this;
 
         var template = element.state.template;
-
-        //console.log(element.state.types)
 
         const selectDay = element.state.weekDays.map((day, i) => {
             if(day){
@@ -165,8 +167,9 @@ var Template = React.createClass({
 
         return (
             <div>
-                
-                    <h2>Template</h2>
+                {element.state.role > 80 ? (
+                    <div>
+                        <h2>Template</h2>
                         <div className="row">
                             <div className="col-xs-12 col-sm-10">
                                 <form className="form-inline">
@@ -183,7 +186,10 @@ var Template = React.createClass({
                                 {days}
                             </div>    
                         </div>
-                
+                    </div>
+                ) : (
+                    <Failpage message="page" />
+                )}
             </div>
         )
     }

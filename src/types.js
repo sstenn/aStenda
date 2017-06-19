@@ -1,3 +1,5 @@
+var Failpage = require('./failpage.js');
+
 var Types = React.createClass({
 
     getInitialState: function(){
@@ -5,6 +7,7 @@ var Types = React.createClass({
             types: [],
             ajaxUrl: './backend/index.php',
             colors: ['#d20000', '#00509f', '#009f9f', '#009f50', '#9f5000', '#9f009f', '#9f9f00', '#f6fafd'],
+            role: 0,
         })
     },
 
@@ -12,6 +15,9 @@ var Types = React.createClass({
         var element = this;
 
         element.loadTypes();
+
+        this.setState({role: localStorage.getItem('userRole')})
+
     },
 
     loadTypes: function(){
@@ -186,27 +192,33 @@ var Types = React.createClass({
         })
 
         return (
-           <div>
-                <h2>Employment types</h2>
-                    <div className="row">
-                        <div className="col-xs-12 col-sm-10">
-                        <h3>Add type</h3>
-                            <form className="form-inline">
-                                <input className="form-control" placeholder="Name" type="text" ref="name" maxLength="16" />
-                                <select className="form-control" ref="color">{selectColor}</select>
-                                <input className="btn" type="button" value="Add" onClick={element.handleSubmit} />
-                            </form>
+            <div>
+            {element.state.role > 80 ? (
+                <div>
+                    <h2>Employment types</h2>
+                        <div className="row">
+                            <div className="col-xs-12 col-sm-10">
+                            <h3>Add type</h3>
+                                <form className="form-inline">
+                                    <input className="form-control" placeholder="Name" type="text" ref="name" maxLength="16" />
+                                    <select className="form-control" ref="color">{selectColor}</select>
+                                    <input className="btn" type="button" value="Add" onClick={element.handleSubmit} />
+                                </form>
+                            </div>
                         </div>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <h3>Types</h3>
+                            <div className="panel panel-default">{types}</div>
+                        </div>    
                     </div>
-                <div className="row">
-                    <div className="col-md-4">
-                        <h3>Types</h3>
-                        <div className="panel panel-default">{types}</div>
-                    </div>    
                 </div>
+            ) : (
+                <Failpage message="page" />
+            )}
             </div>  
-            )
-}
+        )
+    }
 });
 
 module.exports = Types;

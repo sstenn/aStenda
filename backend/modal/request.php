@@ -103,7 +103,31 @@ class Request {
 
 	public function sendMail($action, $user)
 	{
+		
+		$to = $user;
+		$subject = $action == 'approve' ? "Request approved!" : "Request declined!";
+		$text    = $action == 'approve' ? "approved" : "declined";
 
+		$message = '
+		<html>
+			<head>
+				<title>'.$subject.'</title>
+			</head>
+			<body>
+				<p>Your request is '.$text.'!. Click <a href="localhost/aStenda/">here</a> to go to the log in page</p>
+				<br>
+				<br>
+				<p>Thanks,</p>
+				<p>Sten Jansen</p>
+			</body>
+		</html>
+		';
+
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+		$headers .= 'From: <stenjansen@gmail.com>' . "\r\n";
+
+		mail($to,$subject,$message,$headers);
 	}
 
 }

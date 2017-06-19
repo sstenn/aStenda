@@ -63,7 +63,6 @@ var Auth = React.createClass({
 			}else{
 				//Nieuwe gebruiker die niet word toegelaten op de app
 				element.setState({'failed': true});
-				//<Failpage />
 			}
 
 		});
@@ -84,10 +83,8 @@ var Auth = React.createClass({
 			}
 		}
 
-		//console.log(param);
-
 		$.post({url: ajaxUrl, data: param, dataType: 'json'}).done(function(data){
-			console.log(data);
+			//console.log(data);
 		});
 
 		
@@ -103,13 +100,10 @@ var Auth = React.createClass({
 	render: function(){
 			
 
-		//const loggedIn = this.state.active;
-		//const loggedIn = localStorage.getItem('userId');
-
 			return (
 				<div>
 					{this.state.failed ? (
-						<Failpage />
+						<Failpage message="app" />
 					) : (
 						<div>
 							{this.state.role ? (
@@ -122,11 +116,7 @@ var Auth = React.createClass({
 						</div>
 					)}
 				</div>	
-				)
-	
-
-
-		
+			)
 	}
 });
 

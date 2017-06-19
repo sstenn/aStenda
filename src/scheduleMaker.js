@@ -1,4 +1,6 @@
 var Popup = require('./popup.js');
+var Failpage = require('./failpage.js');
+
 
 var ScheduleMaker = React.createClass({
 
@@ -19,6 +21,7 @@ var ScheduleMaker = React.createClass({
             param: [],
             activeWeek: 0,
             activeYear: 0,
+            role: 0,
         })
     },
 
@@ -28,6 +31,8 @@ var ScheduleMaker = React.createClass({
         element.loadTemplate();
         element.loadUsers();
         element.loadTempSchedule();
+
+        this.setState({role: localStorage.getItem('userRole')})
 
         for(var i=1 ; i<53 ; i++){
 
@@ -108,7 +113,7 @@ var ScheduleMaker = React.createClass({
 
     getFirstDayOfWeek: function(w, y) {
         var today = new Date(y, 0, 1 + (w - 1) * 7);
-        var dayOfWeekStartingSundayZeroIndexBased = today.getDay(); // 0 : Sunday ,1 : Monday,2,3,4,5,6 : Saturday
+        var dayOfWeekStartingSundayZeroIndexBased = today.getDay();
         var mondayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()+1);
 
         return mondayOfWeek;
@@ -220,8 +225,6 @@ var ScheduleMaker = React.createClass({
             return false;
         }
 
-        
-
     },
 
     sendSchedule: function(action=false){
@@ -331,37 +334,43 @@ var ScheduleMaker = React.createClass({
 
         return (
             <div>
-                <div className="errorMessage">{element.state.errorMessage}</div>
-                <h2>Schedule maker</h2>
-                <div className="row">
-                    <div className="col-xs-6 col-sm-5">
-                        <form className="form-inline">
-                            <select className="form-control" ref="week">{selectWeek}</select>
-                            <select className="form-control" ref="year">{selectYear}</select>
-                            <input className="btn" type="button" value="Select" onClick={element.handleSubmit} />
-                        </form>
+                {element.state.role > 80 ? (
+                    <div>
+                        <div className="errorMessage">{element.state.errorMessage}</div>
+                        <h2>Schedule maker</h2>
+                        <div className="row">
+                            <div className="col-xs-6 col-sm-5">
+                                <form className="form-inline">
+                                    <select className="form-control" ref="week">{selectWeek}</select>
+                                    <select className="form-control" ref="year">{selectYear}</select>
+                                    <input className="btn" type="button" value="Select" onClick={element.handleSubmit} />
+                                </form>
+                            </div>
+                            <div className="col-xs-6 col-sm-5">
+                                <input className="btn pull-right" type="button" value="Publish!" onClick={element.popup} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-12 col-sm-10">
+                                {week}
+                            </div>  
+                        </div>
+                        <div className="row scheduleMakerUsers">
+                            <div className="col-xs-12 col-md-10">
+                                <div className="panel panel-default"><div className="row">{users}</div></div>
+                            </div>
+                        </div>
+                        {element.state.showConfirm ? (
+                            <Popup message="Publish this schedule?" handleClick={element.sendSchedule} />
+                        ) : (
+                            null
+                        )}
                     </div>
-                    <div className="col-xs-6 col-sm-5">
-                        <input className="btn pull-right" type="button" value="Publish!" onClick={element.popup} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xs-12 col-sm-10">
-                        {week}
-                    </div>  
-                </div>
-                <div className="row scheduleMakerUsers">
-                    <div className="col-xs-12 col-md-10">
-                        <div className="panel panel-default"><div className="row">{users}</div></div>
-                    </div>
-                </div>
-                {element.state.showConfirm ? (
-                    <Popup message="Publish this schedule?" handleClick={element.sendSchedule} />
                 ) : (
-                    null
+                    <Failpage message="page" />
                 )}
             </div>  
-            )
+        )
     }
 });
 

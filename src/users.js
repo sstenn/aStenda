@@ -1,4 +1,5 @@
 var Popup = require('./popup.js');
+var Failpage = require('./failpage.js');
 
 
 var Users = React.createClass({
@@ -12,16 +13,18 @@ var Users = React.createClass({
             errorMessage: '',
             showConfirm: false,
             param: [],
+            role: 0,
         })
     },
 
     componentWillMount: function(){
         this.loadUsers();
 
+        this.setState({role: localStorage.getItem('userRole')})
+
     },
 
     shouldComponentUpdate: function(nextProps, nextState){
-        //console.log(this.state, nextState);
         if(nextState != this.state || nextProps != this.props){
             return true
         }else{
@@ -60,9 +63,7 @@ var Users = React.createClass({
             }
         }
 
-        $.post({url: this.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){
-            //console.log(data);
-            
+        $.post({url: this.state.ajaxUrl, data: param, dataType: 'json'}).done(function(data){            
             if(data){
                 document.getElementById('addUserInput').value = '';
                 element.setState({errorMessage: 'User invited!'})
@@ -79,13 +80,11 @@ var Users = React.createClass({
     handleUserClick: function(e){
         e.preventDefault();
 
-        //console.log(e);
     },
 
     handlePendingUserClick: function(e){
         e.preventDefault();
 
-        //console.log(e);
     },
 
     handleAddUserClick: function(e){
@@ -162,7 +161,7 @@ var Users = React.createClass({
     render: function(){
         var element = this;
 
-        //console.log(element.state.showConfirm);
+        const role = element.state.role;
     
         //activeUsers(){
                 const activeUsers = this.state.users.map((user, i) => {
@@ -196,38 +195,44 @@ var Users = React.createClass({
         //};
         return (
             <div>
-                <h2>Users</h2>
-                <div className="row">
-                    <div className="col-md-4">
-                        <h3>Add user</h3>
-                        <form>
-                          <div className="input-group">
-                            <input id="addUserInput" type="text" className="form-control" placeholder="Add user" />
-                            <div className="input-group-btn">
-                              <button className="btn" onClick={element.handleAddUserClick} >
-                                Add
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                    </div>
-                    <div className="errorMessage">{element.state.errorMessage}</div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4">
-                            <h3>Active users</h3>
-                            <div className="panel panel-default">{activeUsers}</div>
+            { role > 80 ? (
+                <div>
+                    <h2>Users</h2>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <h3>Add user</h3>
+                            <form>
+                              <div className="input-group">
+                                <input id="addUserInput" type="text" className="form-control" placeholder="Add user" />
+                                <div className="input-group-btn">
+                                  <button className="btn" onClick={element.handleAddUserClick} >
+                                    Add
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
                         </div>
-                        <div className="col-md-4 col-md-offset-2">
-                            <h3>Pending users</h3>
-                            <div className="panel panel-default">{pendingUsers}</div>
+                        <div className="errorMessage">{element.state.errorMessage}</div>
                     </div>
+                    <div className="row">
+                        <div className="col-md-4">
+                                <h3>Active users</h3>
+                                <div className="panel panel-default">{activeUsers}</div>
+                            </div>
+                            <div className="col-md-4 col-md-offset-2">
+                                <h3>Pending users</h3>
+                                <div className="panel panel-default">{pendingUsers}</div>
+                        </div>
+                    </div>
+                    {element.state.showConfirm ? (
+                        <Popup message="Are you sure?" handleClick={element.removeUser} />
+                    ) : (
+                        null
+                    )}
                 </div>
-                {element.state.showConfirm ? (
-                    <Popup message="Are you sure?" handleClick={element.removeUser} />
-                ) : (
-                    null
-                )}
+            ) : (
+                <Failpage message="page" />
+            )}
             </div>
         )
     }
