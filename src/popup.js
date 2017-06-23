@@ -18,15 +18,9 @@ var Popup = React.createClass({
     handleClick: function(e){
         e.preventDefault();
 
-        //var name = e.target.className; 
         var action = e.target.value;
 
-        //console.log(name)   
-
-        //if(name == 'confirm-bg' || typeof action !== 'undefined'){
-
         this.props.handleClick(action)
-        //}
     },
 
     render: function(){

@@ -71,6 +71,7 @@ var Auth = React.createClass({
 	},
 
 	setNewUser: function(){
+		//Zet een nieuwe gebruiker van pending naar user
 		var ajaxUrl = './backend/index.php';
 
 		var param = {
@@ -84,14 +85,13 @@ var Auth = React.createClass({
 		}
 
 		$.post({url: ajaxUrl, data: param, dataType: 'json'}).done(function(data){
-			//console.log(data);
 		});
 
 		
 	},
 
 	setSession: function(role){		
-
+		//Bewaar in de localstorage de rol en het id
 		localStorage.setItem('userRole', role);
 		localStorage.setItem('userGoogleId', this.state.userId);
 

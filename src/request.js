@@ -47,10 +47,12 @@ var Request = React.createClass({
         var reason   = element.refs.requestReason.value;
 
         if(dateFrom == '' || dateTill == '' || reason == ''){
+            //Als een van de velden leeg is, doe niks
             return false;
         }else{
+            //Als de juiste velden gevuld zijn, doe een request
             element.doRequest(dateFrom, dateTill, timeFrom, timeTill, reason);
-
+            //Maak de input velden weer leeg na de request
             element.refs.requestFromDate.value = '';
             element.refs.requestFromTime.value = '';
             element.refs.requestTillDate.value = '';
@@ -66,16 +68,16 @@ var Request = React.createClass({
         var target = e.target.id;
 
         if(target == 'dateFrom'){
+            //Als de datum van word gezet moet de minimale datum van de datum tot de waarde van de datum van zijn
             document.getElementById('dateTill').setAttribute('min', e.target.value);
         }else{
+            //En andersom
             document.getElementById('dateFrom').setAttribute('max', e.target.value);
         }
     },
 
     render: function(){
         var element = this;
-
-        //console.log(this.state.user_id);
 
         return (
            <div>

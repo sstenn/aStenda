@@ -1,5 +1,3 @@
-//var Agenda = require('./agenda.js');
-
 var Home = React.createClass({
 
     getInitialState: function(){
@@ -14,6 +12,7 @@ var Home = React.createClass({
     },
 
     logout: function(){
+        //Maak de localstorage leeg en ga terug naar de login
         localStorage.setItem('userRole', 0);
         localStorage.setItem('userGoogleId', '');
 
@@ -21,6 +20,8 @@ var Home = React.createClass({
     },
 
     render: function(){
+        //bouw het menu op, op basis van de rollen worden menu items wel of niet getoont
+
         var element = this;
 
         const role = this.state.role;

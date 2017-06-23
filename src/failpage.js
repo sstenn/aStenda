@@ -1,5 +1,3 @@
-//var Agenda = require('./agenda.js');
-
 var Fail = React.createClass({
 
     getInitialState: function(){
@@ -16,6 +14,7 @@ var Fail = React.createClass({
     },
 
     handleClick: function(){
+        //Voor de zekerheid zet de localstorage op nul
         localStorage.setItem('userRole', 0);
         localStorage.setItem('userGoogleId', '');
 

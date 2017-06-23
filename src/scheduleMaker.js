@@ -36,7 +36,6 @@ var ScheduleMaker = React.createClass({
 
         for(var i=1 ; i<53 ; i++){
 
-            //if week nr nog niet voorkomt in roosters die klaar zijn dan  || Bij het selecteren of er al een rooster bestaat
             element.state.weeks.push(i);
         }
 
@@ -113,7 +112,6 @@ var ScheduleMaker = React.createClass({
 
     getFirstDayOfWeek: function(w, y) {
         var today = new Date(y, 0, 1 + (w - 1) * 7);
-        var dayOfWeekStartingSundayZeroIndexBased = today.getDay();
         var mondayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()+1);
 
         return mondayOfWeek;

@@ -95,6 +95,7 @@ var Requests = React.createClass({
         const pending = this.state.pending.map((request, i) => {
             if(request){
 
+                //Zet de datums en tijd in een leesbare weergave
                 var dateTimeFrom = request.time_from.split(" ");            
                 var aDateFrom    = dateTimeFrom[0].split("-");
                 var dateFrom     = aDateFrom[2] + '-' + aDateFrom[1] + '-' + aDateFrom[0];
@@ -143,6 +144,7 @@ var Requests = React.createClass({
         const approved = this.state.approved.map((request, i) => {
             if(request){
 
+                //Zet de datums en tijd in een leesbare weergave
                 var dateTimeFrom = request.time_from.split(" ");            
                 var aDateFrom    = dateTimeFrom[0].split("-");
                 var dateFrom     = aDateFrom[2] + '-' + aDateFrom[1] + '-' + aDateFrom[0];

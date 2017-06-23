@@ -33,9 +33,7 @@ var { Router,
     },
 
     render: function(){
-
-      //console.log(this.state.role)
-
+      //De routes van het menu naar de juiste componenten
       return (
         <Router history={hashHistory}>
           <Route path="/" component={Home}>
@@ -54,13 +52,3 @@ var { Router,
   });
 
   module.exports = Navbar;
-
-/*
-ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route path="/" component={Home}>
- 	  <IndexRoute component={Agenda}/> // Default page
- 	    <Route path="agenda" component={Agenda} />
-      <Route path="schedule" component={Schedule} />
-    </Route>
-  </Router>, document.getElementById('app'));*/

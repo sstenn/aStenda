@@ -110,8 +110,9 @@ var ScheduleMaker = React.createClass({
     },
 
     getFirstDayOfWeek: function(w, y) {
+        //Op basis van de week en het jaar bereken de eerste dag van de week
         var today = new Date(y, 0, 1 + (w - 1) * 7);
-        var dayOfWeekStartingSundayZeroIndexBased = today.getDay(); // 0 : Sunday ,1 : Monday,2,3,4,5,6 : Saturday
+        var dayOfWeekStartingSundayZeroIndexBased = today.getDay();
         var mondayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()+1);
 
         return mondayOfWeek;
@@ -180,7 +181,7 @@ var ScheduleMaker = React.createClass({
 
         const week = element.state.days.map((day, i) => {
                     if(day){
-
+                        //Zoek de bij elkaar horende informatie bij elkaar om een rooster neer te zetten
                         var fullDay = element.state.weekDays[i];
 
                         if(template[fullDay]){
