@@ -111,8 +111,6 @@ class User {
 			return false;
 		}
 
-		
-
 	}
 
 	public function sendInviteMail($gmail)

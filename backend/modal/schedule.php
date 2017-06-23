@@ -228,8 +228,6 @@ class Schedule {
 		$q .= ' where google_id = "' . $param['user'] . '"';
 		$q .= ' order by date, time_from';
 
-		//var_dump($q);die;
-
 		$res = $this->_db->query($q);
 
 		return $this->_db->get_row_array($res);

@@ -4,8 +4,8 @@ class db {
     private $_db;
 
 
-    public function __construct(){ //$host, $user, $pass, $name
-        $this->_db = mysqli_connect('localhost', 'root', '', 'astenda');
+    public function __construct(){   //$host   , $user ,$pass, $name
+        $this->_db = mysqli_connect('localhost', 'root', ''  , 'astenda');
         if(!$this->_db){
             return mysqli_connect_errno();
         };
@@ -22,8 +22,7 @@ class db {
         if($sort){$query .= " ORDER BY " .$sort;}
         if($limit){$query .= " LIMIT " .$limit;}
         $query .= ";";
-                    
-        
+                            
         return $this->_db->query($query);
 
     }
@@ -33,8 +32,6 @@ class db {
         if($condition2){$query .= " AND " .$condition2['key'].$condition2['constructor']."'".$condition2['value']. "'";}
         if($condition3){$query .= " AND " .$condition3['key'].$condition3['constructor']."'".$condition3['value']. "'";}
         $query .= ";";
-
-        //var_dump($query);die;
 
         return $this->_db->query($query);
     }
@@ -79,13 +76,6 @@ class db {
         while ($row = mysqli_fetch_array($result, $type)) {
             $result_array[] =$row;
         }
-
-
-        /*foreach ($row as $key => $value) {
-            $row[$key] = $value;
-        }*/
-
-        //var_dump($result_array);die();
 
         return $result_array;
     }

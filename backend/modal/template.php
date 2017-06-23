@@ -21,8 +21,6 @@ class Template {
 			'type_id'   => $param['type']
 		]);
 
-		//r_dump($insertArray);die;
-
 		return $this->_db->insert($table, $insertArray);
 	}
 
@@ -44,8 +42,6 @@ class Template {
 			$return[$value['week_day']][] = $time;
 
 		}
-
-		//var_dump($return);die;
 
 		return $return;
 	}
